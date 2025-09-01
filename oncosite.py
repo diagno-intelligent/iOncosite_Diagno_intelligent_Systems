@@ -635,7 +635,7 @@ def get_base64_image(img_path):
     return base64.b64encode(data).decode()
 
 # Path to your logo (adjust if needed)
-logo_path = "E:/project_new/Project_MCN_code/LOGO.jpg"
+logo_path = "LOGO.jpg"
 
 if os.path.exists(logo_path):
     img_base64 = get_base64_image(logo_path)
