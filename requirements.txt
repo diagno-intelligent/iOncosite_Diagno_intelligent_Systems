@@ -13,4 +13,5 @@ scikit-learn==1.0.2
 imutils
 seaborn
 xgboost==1.6.2  
+numpy==1.26.4
 
