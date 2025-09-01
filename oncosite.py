@@ -635,7 +635,14 @@ def get_base64_image(img_path):
     return base64.b64encode(data).decode()
 
 # Path to your logo (adjust if needed)
-logo_path = "LOGO.jpg"
+import os
+
+# Get the current script directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+print('current_dir')
+# Build the logo path relative to current directory
+logo_path = os.path.join(current_dir, "LOGO.jpg")
+#logo_path = "./LOGO.jpg"
 
 if os.path.exists(logo_path):
     img_base64 = get_base64_image(logo_path)
