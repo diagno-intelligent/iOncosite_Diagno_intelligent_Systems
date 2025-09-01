@@ -13,8 +13,8 @@ def full_code(image_path):
     import matplotlib.pyplot as plt
     from tensorflow import keras
     warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
-    new_dir = "E:/project_new/Project_MCN_code"  # replace with your desired folder
-    os.chdir(new_dir)
+    #new_dir = "E:/project_new/Project_MCN_code"  # replace with your desired folder
+    #os.chdir(new_dir)
     ################  getting input
     img_path = image_path
     imp_result=[]
@@ -957,4 +957,5 @@ def full_code(image_path):
 # #
 # imp_result,max_confidence_ML=full_code(image_path)
 # #
+
 # print('final_impression',imp_result)
