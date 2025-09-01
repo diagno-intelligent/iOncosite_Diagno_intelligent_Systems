@@ -2,4 +2,16 @@ opencv-python-headless
 matplotlib
 pydicom
 tensorflow
+scipy
+scikit-image
+pandas
+xlrd==2.0.1
+openpyxl==3.1.5
+imutils==0.5.4
+joblib==1.4.2
+scikit-learn==1.0.2
+python-docx==1.1.2
+imutils==0.5.4
+seaborn==0.12.2
+xgboost==1.6.2  
 
