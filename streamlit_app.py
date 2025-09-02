@@ -8,14 +8,14 @@ import json
 import uuid
 import numpy as np
 import tensorflow as tf
-import keras
+from tf import keras
 #https://drive.google.com/file/d/1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh/view?usp=sharing  ## v3
 #https://drive.google.com/file/d/1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m/view?usp=sharing  ##B3
 
 import gdown
 ########### efficientnetb3 model
-url = "https://drive.google.com/file/d/1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m/view?usp=sharing"  # replace with your file id
-output = "model.keras"
+#url = "https://drive.google.com/file/d/1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m/view?usp=sharing"  # replace with your file id
+#output = "model.keras"
 
 # Google Drive file id
 file_id = "1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m"
