@@ -882,8 +882,14 @@ def full_code(image_path):
                     max_confidence_ML = conf_ML
         else:
             # fallback if df missing/empty
-            imp_result = "Prediction unavailable (no valid CSV)"
-            max_confidence_ML = None
+            if predicted_value[0] == 0:
+                imp_result = 'Lung Cancer'
+                max_confidence_ML = predicted_proba_DL
+                imp_image_out = "./result.jpg"
+            else:
+                imp_result = 'Non-Lung Cancer'
+                max_confidence_ML = predicted_proba_DL
+                imp_image_out = "./result.jpg"
 
         if imp_result != 'Non-Lung Cancer':
             imp_image_out2 = "./output_YOLOV11/Grad_cam_PRED.png"
