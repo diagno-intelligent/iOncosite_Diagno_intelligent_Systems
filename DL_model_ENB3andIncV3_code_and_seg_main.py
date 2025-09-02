@@ -1,19 +1,15 @@
 def full_code(image_path):
     import cv2
     import os
-
     import numpy as np
     import pandas as pd
-    from tensorflow import keras
     from sklearn.preprocessing import MinMaxScaler
     import joblib
     import pickle
     import warnings
     import tensorflow as tf
-    import os
     import shutil
     import matplotlib.pyplot as plt
-    from tensorflow import keras
     warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
     #new_dir = "E:/project_new/Project_MCN_code"  # replace with your desired folder
     #os.chdir(new_dir)
@@ -331,11 +327,7 @@ def full_code(image_path):
     ########################## segmentation model
     output_path = "./images_YOLOV11/V11_input.png"
     if 1==1:#predicted_value[0]!=1:
-
-
-        import cv2
         from PIL import Image
-        import matplotlib.pyplot as plt
         # Load best model
         # Class mapping
         class_names = {0: "Mass", 1: "COPD", 2: "Normal"}
@@ -389,9 +381,7 @@ def full_code(image_path):
                 print('*2###############################################')
         #print(sfdsfsgag)
         ###### feature extraction
-        import os
         import torch
-        import pandas as pd
         from tqdm import tqdm
 
         # === Load trained YOLOv10 model ===
@@ -534,10 +524,6 @@ def full_code(image_path):
 
         ############## segmented region
         if 1==1:#ens_ML_MCN_output==0: #
-            import os
-            import cv2
-            from PIL import Image
-
             # ----------------------------
             # CLASS NAMES
             # ----------------------------
@@ -836,8 +822,6 @@ def full_code(image_path):
     #df.to_csv("./output_poly_feret/region_stats_with_class.csv", index=False)
     #print(df)
     if os.path.exists(os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv")):
-        import os
-        import pandas as pd
         from pandas.errors import EmptyDataError
 
         csv_path = os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv")
@@ -960,6 +944,9 @@ def full_code(image_path):
 
     plt.close('all')
     ################3
+    model=[]
+    eff_model=[]
+    inc_model=[]
     return imp_result,max_confidence_ML
 
 # img_path=image_path ="E:/project_new/downloads/chest_xray_14_Multiclass_data/images_011/images/00027833_022.png"
