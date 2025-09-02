@@ -1,5 +1,7 @@
 def full_code(image_path):
     import cv2
+    import os
+    from ultralytics import YOLO
     import numpy as np
     import pandas as pd
     from tensorflow import keras
@@ -330,8 +332,7 @@ def full_code(image_path):
     output_path = "./images_YOLOV11/V11_input.png"
     if 1==1:#predicted_value[0]!=1:
 
-        import os
-        from ultralytics import YOLO
+
         import cv2
         from PIL import Image
         import matplotlib.pyplot as plt
@@ -391,7 +392,6 @@ def full_code(image_path):
         import torch
         import pandas as pd
         from tqdm import tqdm
-        from ultralytics import YOLO
 
         # === Load trained YOLOv10 model ===
         model.eval()
