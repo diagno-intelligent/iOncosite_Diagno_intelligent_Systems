@@ -885,10 +885,12 @@ def full_code(image_path):
             if predicted_value[0] == 0:
                 imp_result = 'Lung Cancer'
                 max_confidence_ML = predicted_proba_DL
+                shutil.copy("./output_YOLOV11/Grad_cam_PRED.png", "./result.jpg")
                 imp_image_out = "./result.jpg"
             else:
                 imp_result = 'Non-Lung Cancer'
                 max_confidence_ML = predicted_proba_DL
+                shutil.copy("./output_YOLOV11/Grad_cam_PRED.png", "./result.jpg")
                 imp_image_out = "./result.jpg"
 
         if imp_result != 'Non-Lung Cancer':
