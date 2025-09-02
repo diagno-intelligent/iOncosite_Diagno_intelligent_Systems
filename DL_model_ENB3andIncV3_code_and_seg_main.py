@@ -18,29 +18,30 @@ def full_code(image_path):
     imp_result=[]
     predicted_value=[]
     region_rows1 = []
+
+    # ==================================
+    # ================================
+    # Load models
+    # ================================
+    eff_model = keras.models.load_model(
+        "./DL_model_ENB3andIncV3/model_LCm_others_B3_20d_8b_m300_ly1024_ly512.keras",
+        compile=False
+    )
+
+    inc_model = keras.models.load_model(
+        "./DL_model_ENB3andIncV3/model_LCm_others_V3_20d_64b_m299_ly1024_ly512.keras",
+        compile=False
+    )
+
+    # ================================
     current_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = "output_poly_feret/region_stats_with_class.csv"
     file_path = os.path.join(current_dir, file_path)
     if os.path.exists(file_path):
         os.remove(file_path)
-        print(f"Deleted: {os.path.exists(file_path)}") 
+        print(f"Deleted: {os.path.exists(file_path)}")
     else:
         print("File does not exist.")
-    # ==================================
-    # ================================
-    # Load models
-    # ================================
-    eff_model = keras.models.load_model(os.path.join(current_dir,
-        'DL_model_ENB3andIncV3','model_LCm_others_B3_20d_8b_m300_ly1024_ly512.keras'),
-        compile=False
-    )
-
-    inc_model = keras.models.load_model(os.path.join(current_dir,
-        'DL_model_ENB3andIncV3','model_LCm_others_V3_20d_64b_m299_ly1024_ly512.keras'),
-        compile=False
-    )
-
-    # ================================
     # Preprocessing
     # ================================
     def preprocess_image(img_path, img_size):
