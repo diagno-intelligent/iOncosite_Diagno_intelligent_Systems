@@ -1,4 +1,4 @@
-def full_code(image_path):
+def full_code(image_path,eff_model,inc_model):
     import cv2
     import os
     import numpy as np
@@ -25,15 +25,17 @@ def full_code(image_path):
     # ================================
     # Load models
     # ================================
-    eff_model = keras.models.load_model(
-        "./DL_model_ENB3andIncV3/model_LCm_others_B3_20d_8b_m300_ly1024_ly512.keras",
-        compile=False
-    )
-
-    inc_model = keras.models.load_model(
-        "./DL_model_ENB3andIncV3/model_LCm_others_V3_20d_64b_m299_ly1024_ly512.keras",
-        compile=False
-    )
+    eff_model =eff_model
+    # eff_model = keras.models.load_model(
+    #     "./DL_model_ENB3andIncV3/model_LCm_others_B3_20d_8b_m300_ly1024_ly512.keras",
+    #     compile=False
+    # )
+    #
+    inc_model =inc_model 
+    # inc_model = keras.models.load_model(
+    #     "./DL_model_ENB3andIncV3/model_LCm_others_V3_20d_64b_m299_ly1024_ly512.keras",
+    #     compile=False
+    # )
 
     # ================================
     current_dir = os.path.dirname(os.path.abspath(__file__))
