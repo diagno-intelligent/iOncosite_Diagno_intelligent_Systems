@@ -20,8 +20,9 @@ def full_code(image_path):
     imp_result=[]
     predicted_value=[]
     region_rows1 = []
-    file_path = "./output_poly_feret/region_stats_with_class.csv"
-
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = "output_poly_feret/region_stats_with_class.csv"
+    file_path = os.path.join(current_dir, file_path)
     if os.path.exists(file_path):
         os.remove(file_path)
         print(f"Deleted: {os.path.exists(file_path)}") 
@@ -833,8 +834,8 @@ def full_code(image_path):
     #df = pd.DataFrame(region_rows)
     #df.to_csv("./output_poly_feret/region_stats_with_class.csv", index=False)
     #print(df)
-    if os.path.exists("./output_poly_feret/region_stats_with_class.csv"):
-        df= pd.read_csv("./output_poly_feret/region_stats_with_class.csv")
+    if os.path.exists(os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv")):
+        df= pd.read_csv(os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv"))
         # ✅ Check if Class column has Mass, COPD, both, or none
         has_mass = (df["Class"] == "Mass").any()
         has_copd = (df["Class"] == "COPD").any()
