@@ -1,7 +1,7 @@
 def full_code(image_path):
     import cv2
     import os
-    from ultralytics import YOLO
+
     import numpy as np
     import pandas as pd
     from tensorflow import keras
@@ -353,6 +353,7 @@ def full_code(image_path):
         cwd = os.getcwd()
         #print("Current working directory:", cwd)
         # Set directory
+        from ultralytics import YOLO
         model = YOLO("./yolov11_seg_MCN_best.pt")
         # Input/output
         ############################
