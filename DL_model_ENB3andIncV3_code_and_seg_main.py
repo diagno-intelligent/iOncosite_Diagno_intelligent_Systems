@@ -30,13 +30,13 @@ def full_code(image_path):
     # ================================
     # Load models
     # ================================
-    eff_model = keras.models.load_model(
-        "./DL_model_ENB3andIncV3/model_LCm_others_B3_20d_8b_m300_ly1024_ly512.keras",
+    eff_model = keras.models.load_model(os.path.join(current_dir,
+        'DL_model_ENB3andIncV3','model_LCm_others_B3_20d_8b_m300_ly1024_ly512.keras'),
         compile=False
     )
 
-    inc_model = keras.models.load_model(
-        "./DL_model_ENB3andIncV3/model_LCm_others_V3_20d_64b_m299_ly1024_ly512.keras",
+    inc_model = keras.models.load_model(os.path.join(current_dir,
+        'DL_model_ENB3andIncV3','model_LCm_others_V3_20d_64b_m299_ly1024_ly512.keras'),
         compile=False
     )
 
