@@ -220,17 +220,23 @@ def full_code(image_path,eff_model,inc_model):
         selected_feature_indices = list(map(int, file.read().split(',')))
     X_test_selected1 = X_test1.iloc[:, selected_feature_indices]
     selected_feature_names = X1.columns[selected_feature_indices]
-    # 1️⃣ Google Drive file_id
+    # Google Drive file_id
     import gdown
     file_id = "10Z-BCAmrStFZcedCNYLD6BIc0WU_8KXb"  # extract from share link
-    output = "lbm_BOTH_rf_model.pkl"
+    output_RF_chi = "lbm_BOTH_rf_model.pkl"
+    # Correct download URL
+    url = f"https://drive.google.com/uc?id={file_id}"
 
-    # 2️⃣ Download the model
     with st.spinner("Downloading SVM/RF model..."):
-        gdown.download(f"https://drive.google.com/uc?id={file_id}", output, quiet=False)
+        gdown.download(url, output_RF_chi, quiet=False)
 
-    # 3️⃣ Load the model
-    loaded_SVM_model = joblib.load(output)
+    # Check file size
+    import os
+    st.write("Downloaded file size:", os.path.getsize(output_RF_chi), "bytes")
+
+    # Load model
+    loaded_SVM_model = joblib.load(output_RF_chi)
+    st.success("Model loaded successfully!")
     st.success("Model loaded successfully!")
     #loaded_SVM_model = joblib.load(f"./Ensemble_model/selected_models/lbm_BOTH_rf_model_chi2_w_fec_200_train_acc1.0_test_acc0.914235294117647.pkl")
     y_pred1=rf_chi2_LC_NR = loaded_SVM_model.predict(X_test_selected1)
