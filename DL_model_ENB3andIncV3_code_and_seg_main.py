@@ -24,7 +24,8 @@ def full_code(image_path):
 
     if os.path.exists(file_path):
         os.remove(file_path)
-        #print(f"Deleted: {file_path}")
+        print(f"Deleted: {file_path}")
+        print(hsdbhb)
     else:
         print("File does not exist.")
     # ==================================
