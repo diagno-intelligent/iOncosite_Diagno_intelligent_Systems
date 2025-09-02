@@ -8,6 +8,9 @@ import json
 import uuid
 import numpy as np
 
+https://drive.google.com/file/d/1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh/view?usp=sharing  ## v3
+https://drive.google.com/file/d/1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m/view?usp=sharing  ##B3
+
 try:
     import pydicom
     from pydicom.pixel_data_handlers.util import apply_voi_lut
@@ -1034,7 +1037,7 @@ with col2:
         import DL_model_ENB3andIncV3_code_and_seg_main
         from DL_model_ENB3andIncV3_code_and_seg_main import full_code
 
-        imp_result,max_confidence_ML = full_code(output_path)
+        imp_result,max_confidence_ML = full_code(output_path,st.session_state.eff_model, st.session_state.inc_model)
 
         print('final_impression', imp_result)
         #print('output image path :', imp_image_out)
