@@ -17,10 +17,15 @@ import gdown
 url = "https://drive.google.com/file/d/1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m/view?usp=sharing"  # replace with your file id
 output = "model.keras"
 
+# Google Drive file id
+file_id = "1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m"
+url = f"https://drive.google.com/uc?id={file_id}"
+output = "model.keras"
+
 with st.spinner("Downloading model..."):
     gdown.download(url, output, quiet=False)
 
-# 2. Load the model
+# Load the model
 eff_model = keras.models.load_model(output, compile=False)
 ########### inceptionv3 model
 url = "https://drive.google.com/file/d/1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh/view?usp=sharing"  # replace with your file id
