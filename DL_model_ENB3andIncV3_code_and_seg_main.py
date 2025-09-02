@@ -31,7 +31,7 @@ def full_code(image_path,eff_model,inc_model):
     #     compile=False
     # )
     #
-    inc_model =inc_model 
+    inc_model =inc_model
     # inc_model = keras.models.load_model(
     #     "./DL_model_ENB3andIncV3/model_LCm_others_V3_20d_64b_m299_ly1024_ly512.keras",
     #     compile=False
@@ -949,9 +949,7 @@ def full_code(image_path,eff_model,inc_model):
 
     plt.close('all')
     ################3
-    model=[]
-    eff_model=[]
-    inc_model=[]
+
     return imp_result,max_confidence_ML
 
 # img_path=image_path ="E:/project_new/downloads/chest_xray_14_Multiclass_data/images_011/images/00027833_022.png"

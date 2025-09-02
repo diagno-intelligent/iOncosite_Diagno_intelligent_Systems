@@ -1059,7 +1059,7 @@ with col2:
         import DL_model_ENB3andIncV3_code_and_seg_main
         from DL_model_ENB3andIncV3_code_and_seg_main import full_code
 
-        imp_result,max_confidence_ML = full_code(output_path,st.session_state.eff_model, st.session_state.inc_model)
+        imp_result,max_confidence_ML = full_code(output_path,eff_model, inc_model)
 
         print('final_impression', imp_result)
         #print('output image path :', imp_image_out)
