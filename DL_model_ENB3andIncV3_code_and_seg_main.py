@@ -835,7 +835,9 @@ def full_code(image_path):
     #df.to_csv("./output_poly_feret/region_stats_with_class.csv", index=False)
     #print(df)
     if os.path.exists(os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv")):
-        df= pd.read_csv(os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv"))
+        new_csv_path=os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv")
+        print('new_csv_path',new_csv_path)
+        df= pd.read_csv(new_csv_path)
         # ✅ Check if Class column has Mass, COPD, both, or none
         has_mass = (df["Class"] == "Mass").any()
         has_copd = (df["Class"] == "COPD").any()
