@@ -220,7 +220,6 @@ def full_code(image_path,eff_model,inc_model):
         selected_feature_indices = list(map(int, file.read().split(',')))
     X_test_selected1 = X_test1.iloc[:, selected_feature_indices]
     selected_feature_names = X1.columns[selected_feature_indices]
-    # Google Drive file_id
     import gdown
     file_id = "10Z-BCAmrStFZcedCNYLD6BIc0WU_8KXb"  # extract from share link
     output_RF_chi = "lbm_BOTH_rf_model.pkl"
