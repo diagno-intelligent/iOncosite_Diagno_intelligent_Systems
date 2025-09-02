@@ -1,3 +1,4 @@
+streamlit
 matplotlib
 pydicom
 tensorflow==2.18

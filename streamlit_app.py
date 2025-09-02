@@ -7,7 +7,8 @@ import base64
 import json
 import uuid
 import numpy as np
-
+import tensorflow as tf
+import keras
 #https://drive.google.com/file/d/1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh/view?usp=sharing  ## v3
 #https://drive.google.com/file/d/1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m/view?usp=sharing  ##B3
 
@@ -16,19 +17,25 @@ import gdown
 url = "https://drive.google.com/file/d/1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m/view?usp=sharing"  # replace with your file id
 output = "model.keras"
 
+# Google Drive file id
+file_id = "1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m"
+url = f"https://drive.google.com/uc?id={file_id}"
+output = "model.keras"
+
 with st.spinner("Downloading model..."):
     gdown.download(url, output, quiet=False)
 
-# 2. Load the model
+# Load the model
 eff_model = keras.models.load_model(output, compile=False)
 ########### inceptionv3 model
-url = "https://drive.google.com/file/d/1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh/view?usp=sharing"  # replace with your file id
-output1 = "model.keras"
+# InceptionV3 model
+url = "https://drive.google.com/uc?id=1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh"
+output1 = "inceptionv3_model.keras"
 
-with st.spinner("Downloading model..."):
+with st.spinner("Downloading InceptionV3 model..."):
     gdown.download(url, output1, quiet=False)
 
-# 2. Load the model
+# Load the model
 inc_model = keras.models.load_model(output1, compile=False)
 
 
