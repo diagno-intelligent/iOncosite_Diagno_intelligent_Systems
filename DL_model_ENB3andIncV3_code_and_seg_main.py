@@ -1,33 +1,26 @@
 def full_code(image_path):
     import cv2
+    import os
     import numpy as np
     import pandas as pd
-    import keras
-    #from tensorflow import keras
     from sklearn.preprocessing import MinMaxScaler
     import joblib
     import pickle
     import warnings
     import tensorflow as tf
-    import os
+    import keras
+    from tf import keras
     import shutil
     import matplotlib.pyplot as plt
-    from tensorflow import keras
     warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
-    new_dir = "E:/project_new/Project_MCN_code"  # replace with your desired folder
-    os.chdir(new_dir)
+    #new_dir = "E:/project_new/Project_MCN_code"  # replace with your desired folder
+    #os.chdir(new_dir)
     ################  getting input
     img_path = image_path
     imp_result=[]
     predicted_value=[]
     region_rows1 = []
-    file_path = "./output_poly_feret/region_stats_with_class.csv"
 
-    if os.path.exists(file_path):
-        os.remove(file_path)
-        #print(f"Deleted: {file_path}")
-    else:
-        print("File does not exist.")
     # ==================================
     # ================================
     # Load models
@@ -43,6 +36,14 @@ def full_code(image_path):
     )
 
     # ================================
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = "output_poly_feret/region_stats_with_class.csv"
+    file_path = os.path.join(current_dir, file_path)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        print(f"Deleted: {os.path.exists(file_path)}")
+    else:
+        print("File does not exist.")
     # Preprocessing
     # ================================
     def preprocess_image(img_path, img_size):
@@ -329,12 +330,7 @@ def full_code(image_path):
     ########################## segmentation model
     output_path = "./images_YOLOV11/V11_input.png"
     if 1==1:#predicted_value[0]!=1:
-
-        import os
-        from ultralytics import YOLO
-        import cv2
         from PIL import Image
-        import matplotlib.pyplot as plt
         # Load best model
         # Class mapping
         class_names = {0: "Mass", 1: "COPD", 2: "Normal"}
@@ -352,6 +348,7 @@ def full_code(image_path):
         cwd = os.getcwd()
         #print("Current working directory:", cwd)
         # Set directory
+        from ultralytics import YOLO
         model = YOLO("./yolov11_seg_MCN_best.pt")
         # Input/output
         ############################
@@ -387,11 +384,8 @@ def full_code(image_path):
                 print('*2###############################################')
         #print(sfdsfsgag)
         ###### feature extraction
-        import os
         import torch
-        import pandas as pd
         from tqdm import tqdm
-        from ultralytics import YOLO
 
         # === Load trained YOLOv10 model ===
         model.eval()
@@ -533,10 +527,6 @@ def full_code(image_path):
 
         ############## segmented region
         if 1==1:#ens_ML_MCN_output==0: #
-            import os
-            import cv2
-            from PIL import Image
-
             # ----------------------------
             # CLASS NAMES
             # ----------------------------
@@ -821,7 +811,7 @@ def full_code(image_path):
                 cv2.imwrite("./output_YOLOV11/V11_SEG_PRED.png",  cv2.cvtColor(overlay, cv2.COLOR_RGB2BGR))
 
                 df = pd.DataFrame(region_rows)
-                df.to_csv("./output_poly_feret/region_stats_with_class.csv", index=False)
+                df.to_csv(os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv"), index=False)
                 #print(df)
                 return copd_p
 
@@ -834,47 +824,63 @@ def full_code(image_path):
     #df = pd.DataFrame(region_rows)
     #df.to_csv("./output_poly_feret/region_stats_with_class.csv", index=False)
     #print(df)
-    if os.path.exists("./output_poly_feret/region_stats_with_class.csv"):
-        df= pd.read_csv("./output_poly_feret/region_stats_with_class.csv")
-        # ✅ Check if Class column has Mass, COPD, both, or none
-        has_mass = (df["Class"] == "Mass").any()
-        has_copd = (df["Class"] == "COPD").any()
-        # classes = [row["Class"] for row in region_rows1]
-        #
-        # # Flags
-        # has_mass = "Mass" in classes
-        # has_copd = "COPD" in classes
+    if os.path.exists(os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv")):
+        from pandas.errors import EmptyDataError
 
-        # Logic check
-        # if has_mass and has_copd:
-        #     print("Both Mass and COPD found")
-        # elif has_mass:
-        #     print("Mass alone found")
-        # elif has_copd:
-        #     print("COPD alone found")
-        # else:
-        #     print("Neither Mass nor COPD found")
-        if predicted_value[0]==0:
-            max_confidence_ML = predicted_proba_DL
-            imp_result='Lung Cancer'
-            if has_mass and (has_copd or copd_p == 1):
-                imp_result ="Lung Cancer + Mass + COPD"
-                max_confidence_ML = conf_ML
-                #print("Lung Cancer + Mass + COPD")
-            elif has_mass:
-                imp_result ="Lung Cancer + Mass"
-                max_confidence_ML = conf_ML
-                #print("Lung Cancer + Mass")
-            elif has_copd or (copd_p==1):
-                imp_result ="Lung Cancer + COPD"
-                max_confidence_ML = conf_ML
-                #print("Lung Cancer + COPD")
+        csv_path = os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv")
+
+        df = None  # initialize
+
+        if os.path.exists(csv_path):
+            try:
+                df = pd.read_csv(csv_path)
+                print("CSV loaded successfully:", csv_path)
+            except EmptyDataError:
+                print("CSV file exists but is empty:", csv_path)
         else:
-            imp_result='Non-Lung Cancer'
-            max_confidence_ML = predicted_proba_DL
-            if has_copd:
-                imp_result =" COPD (High Risk for Lung Cancer)"
-                max_confidence_ML = conf_ML
+            print("CSV file does not exist:", csv_path)
+
+        # ✅ Only run this block if df was successfully loaded
+        if df is not None and not df.empty:
+            # Check if Class column exists before accessing
+            if "Class" in df.columns:
+                has_mass = (df["Class"] == "Mass").any()
+                has_copd = (df["Class"] == "COPD").any()
+            else:
+                has_mass = has_copd = False
+                print("⚠️ 'Class' column not found in CSV")
+
+            if predicted_value[0] == 0:
+                max_confidence_ML = predicted_proba_DL
+                imp_result = "Lung Cancer"
+                if has_mass and (has_copd or copd_p == 1):
+                    imp_result = "Lung Cancer + Mass + COPD"
+                    max_confidence_ML = conf_ML
+                elif has_mass:
+                    imp_result = "Lung Cancer + Mass"
+                    max_confidence_ML = conf_ML
+                elif has_copd or (copd_p == 1):
+                    imp_result = "Lung Cancer + COPD"
+                    max_confidence_ML = conf_ML
+            else:
+                imp_result = "Non-Lung Cancer"
+                max_confidence_ML = predicted_proba_DL
+                if has_copd:
+                    imp_result = "COPD (High Risk for Lung Cancer)"
+                    max_confidence_ML = conf_ML
+        else:
+            # fallback if df missing/empty
+            if predicted_value[0] == 0:
+                imp_result = 'Lung Cancer'
+                max_confidence_ML = predicted_proba_DL
+                shutil.copy("./output_YOLOV11/Grad_cam_PRED.png", "./result.jpg")
+                imp_image_out = "./result.jpg"
+            else:
+                imp_result = 'Non-Lung Cancer'
+                max_confidence_ML = predicted_proba_DL
+                shutil.copy("./output_YOLOV11/Grad_cam_PRED.png", "./result.jpg")
+                imp_image_out = "./result.jpg"
+
         if imp_result != 'Non-Lung Cancer':
             imp_image_out2 = "./output_YOLOV11/Grad_cam_PRED.png"
             imp_image_out1 = "./output_YOLOV11/V11_SEG_PRED.png"
@@ -941,6 +947,9 @@ def full_code(image_path):
 
     plt.close('all')
     ################3
+    model=[]
+    eff_model=[]
+    inc_model=[]
     return imp_result,max_confidence_ML
 
 # img_path=image_path ="E:/project_new/downloads/chest_xray_14_Multiclass_data/images_011/images/00027833_022.png"
@@ -958,5 +967,5 @@ def full_code(image_path):
 # #
 # imp_result,max_confidence_ML=full_code(image_path)
 # #
-# print('final_impression',imp_result)
 
+# print('final_impression',imp_result)
