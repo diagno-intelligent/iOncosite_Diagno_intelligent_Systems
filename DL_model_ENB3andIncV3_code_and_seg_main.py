@@ -295,14 +295,20 @@ def full_code(image_path,eff_model,inc_model):
     X_test_selected1 = X_test1.iloc[:, selected_feature_indices]
     selected_feature_names = X1.columns[selected_feature_indices]
     # Google Drive file ID for the new model
-    file_id = "1XqGh76vPYDj1avAGI-nv0-R-YhPq5Gyw"  # extract from share link
-    output = "new_model.pkl"
+    file_id = "1XqGh76vPYDj1avAGI-nv0-R-YhPq5Gyw"  # your file ID
+    output = "lbm_BOTH_rf_model.pkl"
 
-    # Download the model
-    with st.spinner("Downloading new model..."):
-        gdown.download(f"https://drive.google.com/uc?id={file_id}", output, quiet=False)
+    # Correct download URL
+    url = f"https://drive.google.com/uc?id={file_id}"
 
-    # Load the model
+    with st.spinner("Downloading SVM/RF model..."):
+        gdown.download(url, output, quiet=False)
+
+    # Check file size
+    import os
+    st.write("Downloaded file size:", os.path.getsize(output), "bytes")
+
+    # Load model
     loaded_SVM_model = joblib.load(output)
     st.success("New model loaded successfully!")
 
