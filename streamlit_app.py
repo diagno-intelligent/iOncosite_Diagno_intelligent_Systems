@@ -28,13 +28,14 @@ with st.spinner("Downloading model..."):
 # Load the model
 eff_model = keras.models.load_model(output, compile=False)
 ########### inceptionv3 model
-url = "https://drive.google.com/file/d/1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh/view?usp=sharing"  # replace with your file id
-output1 = "model.keras"
+# InceptionV3 model
+url = "https://drive.google.com/uc?id=1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh"
+output1 = "inceptionv3_model.keras"
 
-with st.spinner("Downloading model..."):
+with st.spinner("Downloading InceptionV3 model..."):
     gdown.download(url, output1, quiet=False)
 
-# 2. Load the model
+# Load the model
 inc_model = keras.models.load_model(output1, compile=False)
 
 
