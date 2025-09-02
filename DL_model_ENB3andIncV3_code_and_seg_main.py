@@ -835,48 +835,56 @@ def full_code(image_path):
     #df.to_csv("./output_poly_feret/region_stats_with_class.csv", index=False)
     #print(df)
     if os.path.exists(os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv")):
-        new_csv_path=os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv")
-        print('new_csv_path',new_csv_path)
-        df= pd.read_csv(new_csv_path)
-        # ✅ Check if Class column has Mass, COPD, both, or none
-        has_mass = (df["Class"] == "Mass").any()
-        has_copd = (df["Class"] == "COPD").any()
-        # classes = [row["Class"] for row in region_rows1]
-        #
-        # # Flags
-        # has_mass = "Mass" in classes
-        # has_copd = "COPD" in classes
+        import os
+        import pandas as pd
+        from pandas.errors import EmptyDataError
 
-        # Logic check
-        # if has_mass and has_copd:
-        #     print("Both Mass and COPD found")
-        # elif has_mass:
-        #     print("Mass alone found")
-        # elif has_copd:
-        #     print("COPD alone found")
-        # else:
-        #     print("Neither Mass nor COPD found")
-        if predicted_value[0]==0:
-            max_confidence_ML = predicted_proba_DL
-            imp_result='Lung Cancer'
-            if has_mass and (has_copd or copd_p == 1):
-                imp_result ="Lung Cancer + Mass + COPD"
-                max_confidence_ML = conf_ML
-                #print("Lung Cancer + Mass + COPD")
-            elif has_mass:
-                imp_result ="Lung Cancer + Mass"
-                max_confidence_ML = conf_ML
-                #print("Lung Cancer + Mass")
-            elif has_copd or (copd_p==1):
-                imp_result ="Lung Cancer + COPD"
-                max_confidence_ML = conf_ML
-                #print("Lung Cancer + COPD")
+        csv_path = os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv")
+
+        df = None  # initialize
+
+        if os.path.exists(csv_path):
+            try:
+                df = pd.read_csv(csv_path)
+                print("CSV loaded successfully:", csv_path)
+            except EmptyDataError:
+                print("CSV file exists but is empty:", csv_path)
         else:
-            imp_result='Non-Lung Cancer'
-            max_confidence_ML = predicted_proba_DL
-            if has_copd:
-                imp_result =" COPD (High Risk for Lung Cancer)"
-                max_confidence_ML = conf_ML
+            print("CSV file does not exist:", csv_path)
+
+        # ✅ Only run this block if df was successfully loaded
+        if df is not None and not df.empty:
+            # Check if Class column exists before accessing
+            if "Class" in df.columns:
+                has_mass = (df["Class"] == "Mass").any()
+                has_copd = (df["Class"] == "COPD").any()
+            else:
+                has_mass = has_copd = False
+                print("⚠️ 'Class' column not found in CSV")
+
+            if predicted_value[0] == 0:
+                max_confidence_ML = predicted_proba_DL
+                imp_result = "Lung Cancer"
+                if has_mass and (has_copd or copd_p == 1):
+                    imp_result = "Lung Cancer + Mass + COPD"
+                    max_confidence_ML = conf_ML
+                elif has_mass:
+                    imp_result = "Lung Cancer + Mass"
+                    max_confidence_ML = conf_ML
+                elif has_copd or (copd_p == 1):
+                    imp_result = "Lung Cancer + COPD"
+                    max_confidence_ML = conf_ML
+            else:
+                imp_result = "Non-Lung Cancer"
+                max_confidence_ML = predicted_proba_DL
+                if has_copd:
+                    imp_result = "COPD (High Risk for Lung Cancer)"
+                    max_confidence_ML = conf_ML
+        else:
+            # fallback if df missing/empty
+            imp_result = "Prediction unavailable (no valid CSV)"
+            max_confidence_ML = None
+
         if imp_result != 'Non-Lung Cancer':
             imp_image_out2 = "./output_YOLOV11/Grad_cam_PRED.png"
             imp_image_out1 = "./output_YOLOV11/V11_SEG_PRED.png"
