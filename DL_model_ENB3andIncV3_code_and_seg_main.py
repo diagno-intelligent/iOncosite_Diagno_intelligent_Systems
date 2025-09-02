@@ -5,6 +5,7 @@ def fsdf(image_path,eff_model,inc_model):
     return imp_result, max_confidence_ML
 
 def full_code(image_path,eff_model,inc_model):
+    import streamlit as st
     import cv2
     import os
     import numpy as np
