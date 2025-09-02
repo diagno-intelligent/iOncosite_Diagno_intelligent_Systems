@@ -821,7 +821,7 @@ def full_code(image_path):
                 cv2.imwrite("./output_YOLOV11/V11_SEG_PRED.png",  cv2.cvtColor(overlay, cv2.COLOR_RGB2BGR))
 
                 df = pd.DataFrame(region_rows)
-                df.to_csv("./output_poly_feret/region_stats_with_class.csv", index=False)
+                df.to_csv(os.path.join(current_dir, "output_poly_feret", "region_stats_with_class.csv"), index=False)
                 #print(df)
                 return copd_p
 
