@@ -15,7 +15,7 @@ def full_code(image_path,eff_model,inc_model):
     import warnings
     import tensorflow as tf
     import keras
-    from tf import keras
+    from tensorflow import keras
     import shutil
     import matplotlib.pyplot as plt
     warnings.filterwarnings("ignore", category=UserWarning, module="sklearn")
