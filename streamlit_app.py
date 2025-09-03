@@ -19,6 +19,13 @@ hf_token = st.secrets["HF_TOKEN"]
 os.environ["HUGGINGFACE_HUB_TOKEN"] = hf_token
 ##3
 from huggingface_hub import hf_hub_download
+### load yolov11
+from ultralytics import YOLO
+model_path = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="yolov11_seg_MCN_best.pt"
+)
+yolov11 = YOLO(model_path)
 from tensorflow import keras
 
 # Download the model file
@@ -1212,7 +1219,7 @@ with col2:
         from DL_model_ENB3andIncV3_code_and_seg_main import full_code
 
         imp_result,max_confidence_ML = full_code(output_path, eff_model, inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,ens_scaler_rf_chi2,ens_scaler_xgb_chi2,ens_scaler_rf_mi,
-                                                st_ens_LC_NR,sel_ens_M1,sel_ens_M2,sel_ens_M3,scaled_ens_M1,scaled_ens_M2,scaled_ens_M3,ens_MCN)
+                                                st_ens_LC_NR,sel_ens_M1,sel_ens_M2,sel_ens_M3,scaled_ens_M1,scaled_ens_M2,scaled_ens_M3,ens_MCN,yolov11)
 
         print('final_impression', imp_result)
         #print('output image path :', imp_image_out)
