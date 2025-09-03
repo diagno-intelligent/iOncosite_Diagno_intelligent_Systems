@@ -12,6 +12,7 @@ from tensorflow import keras
 import os
 from huggingface_hub import hf_hub_download, whoami
 import joblib
+from ultralytics import YOLO
 # ----------------------------
 # Set Hugging Face token safely 
 # ----------------------------
@@ -30,7 +31,7 @@ def load_yolo():
         repo_id="DiagnoIntelligentSytem/lung-xray-models",
         filename="yolov11_seg_MCN_best.pt"
     )
-    return model_path   # ultralytics.YOLO(model_path) if you need to use YOLO class
+    return ultralytics.YOLO(model_path) if you need to use YOLO class
 
 
 @st.cache_resource
