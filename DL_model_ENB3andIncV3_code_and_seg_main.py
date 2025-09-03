@@ -158,22 +158,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
 
         heatmap = get_gradcam(eff_model, img_array, last_conv_layer_name)
         superimposed_img = overlay_gradcam(img1, heatmap)
-
-        # ---- Show Results ----
-        # plt.figure(figsize=(10, 4))
-        # plt.subplot(1, 2, 1)
-        # plt.title("Original")
-        # plt.imshow(img1)
-        # plt.axis("off")
-        #
-        # plt.subplot(1, 2, 2)
-        # plt.title("Grad-CAM")
-        # plt.imshow(superimposed_img)
-        # plt.axis("off")
-        # plt.show()
-        cv2.imwrite("./output_YOLOV11/Grad_cam_PRED.png", superimposed_img)
         #################
-
         # Copy image
     shutil.copy("./output_YOLOV11/Grad_cam_PRED.png", "./result.jpg")
         #############    ML model
@@ -951,6 +936,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
     ################3
 
     return imp_result,max_confidence_ML
+
 
 
 
