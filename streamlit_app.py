@@ -13,7 +13,7 @@ import os
 from huggingface_hub import whoami
 ############ huggiface
 # Set token temporarily
-HF_TOKEN = "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"
+#HF_TOKEN = "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"
 
 os.environ["HUGGINGFACE_HUB_TOKEN"] = st.secrets["HF_TOKEN"]
 print(whoami())
