@@ -4,7 +4,8 @@ def fsdf(image_path,eff_model,inc_model):
     max_confidence_ML=90
     return imp_result, max_confidence_ML
 
-def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,ens_scaler_rf_chi2,ens_scaler_xgb_chi2,ens_scaler_rf_mi):
+def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,ens_scaler_rf_chi2,ens_scaler_xgb_chi2,ens_scaler_rf_mi,
+             st_ens_LC_NR):
     import streamlit as st
     import cv2
     import os
@@ -329,7 +330,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
     X_stack = np.column_stack((preds_model1, preds_model2, preds_model3))
     print('X_stack ',X_stack )
     # Load the saved stacked ensemble model from the file
-    loaded_model = joblib.load('./Ensemble_model/stacked_ensemble_model_ML_LCmass_others.pkl')
+    loaded_model = joblib.load(st_ens_LC_NR)#'./Ensemble_model/stacked_ensemble_model_ML_LCmass_others.pkl')
     predicted_value = loaded_model.predict(X_stack)
 
     print('st_predicted_value',predicted_value)
@@ -986,6 +987,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
 # #
 
 # print('final_impression',imp_result)
+
 
 
 
