@@ -223,8 +223,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
     X_test_selected1 = X_test1.iloc[:, selected_feature_indices]
     selected_feature_names = X1.columns[selected_feature_indices]
     # Load model
-    loaded_SVM_model = joblib.load(rf_chi2_ens)
-    st.success("Model loaded successfully!")
+    loaded_SVM_model = rf_chi2_ens#joblib.load(rf_chi2_ens)
     st.success("Model loaded successfully!")
     #loaded_SVM_model = joblib.load(f"./Ensemble_model/selected_models/lbm_BOTH_rf_model_chi2_w_fec_200_train_acc1.0_test_acc0.914235294117647.pkl")
     y_pred1=rf_chi2_LC_NR = loaded_SVM_model.predict(X_test_selected1)
@@ -291,7 +290,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
     selected_feature_names = X1.columns[selected_feature_indices]
     # Google Drive file ID for the new model
     # Load model
-    loaded_SVM_model = joblib.load(rf_mi_en)
+    loaded_SVM_model = rf_mi_en#joblib.load()
     st.success("New model loaded successfully!")
 
     #loaded_SVM_model = joblib.load(f"./Ensemble_model/selected_models/lbm_BOTH_rf_model_mutual_info_classif_w_fec_150_train_acc1.0_test_acc0.914235294117647.pkl")
@@ -330,7 +329,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
     X_stack = np.column_stack((preds_model1, preds_model2, preds_model3))
     print('X_stack ',X_stack )
     # Load the saved stacked ensemble model from the file
-    loaded_model = joblib.load(st_ens_LC_NR)#'./Ensemble_model/stacked_ensemble_model_ML_LCmass_others.pkl')
+    loaded_model = st_ens_LC_NR #joblib.load()#'./Ensemble_model/stacked_ensemble_model_ML_LCmass_others.pkl')
     predicted_value = loaded_model.predict(X_stack)
 
     print('st_predicted_value',predicted_value)
@@ -987,6 +986,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
 # #
 
 # print('final_impression',imp_result)
+
 
 
 
