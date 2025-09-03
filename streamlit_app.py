@@ -44,23 +44,24 @@ inc_model = keras.models.load_model(
 
 #### loading ML
 # Load Random Forest (Chi2)
-rf_chi2_ens = hf_hub_download(
+model_path = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="lbm_BOTH_rf_model_chi2_w_fec_200_train_acc1.0_test_acc0.914235294117647.pkl"
 )
-
+rf_chi2_ens=joblib.load(model_path)
 # Load XGBoost (Chi2)
-xgb_chi2_ens = hf_hub_download(
+model_path = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="2_LC_mass_other_xgb_chi2_fec_150_acc1.0.pkl"
 )
-
+xgb_chi2_ens=joblib.load(model_path)
 
 # Load Random Forest (Mutual Info)
-rf_mi_ens =hf_hub_download(
+model_path =hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="lbm_BOTH_rf_model_mutual_info_classif_w_fec_150_train_acc1.0_test_acc0.914235294117647.pkl"
 )
+rf_mi_ens=joblib.load(model_path)
 ##### loading sclare
 ens_scaler_rf_chi2 = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
