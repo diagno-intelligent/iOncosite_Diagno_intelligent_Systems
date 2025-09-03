@@ -16,7 +16,7 @@ import gdown
 ########### efficientnetb3 and inceptionv3 model
 @st.cache_resource
 def load_eff_model():
-    file_id = "1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m"
+    file_id = "14Nv2fGaPe97Qrik6cWPGaa5npcScDLhw"
     url = f"https://drive.google.com/uc?id={file_id}"
     output = "model.keras"
     if not os.path.exists(output):  # download only if missing
@@ -26,7 +26,7 @@ def load_eff_model():
 
 @st.cache_resource
 def load_inc_model():
-    file_id = "1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh"
+    file_id = "1uDY-p3KYFimHFhUlnhGL9z3B1Wy9EvxV"
     url = f"https://drive.google.com/uc?id={file_id}"
     output = "inceptionv3_model.keras"
     if not os.path.exists(output):  # download only if missing
