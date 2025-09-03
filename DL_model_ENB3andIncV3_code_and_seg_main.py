@@ -5,7 +5,7 @@ def fsdf(image_path,eff_model,inc_model):
     return imp_result, max_confidence_ML
 
 def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,ens_scaler_rf_chi2,ens_scaler_xgb_chi2,ens_scaler_rf_mi,
-             st_ens_LC_NR,sel_ens_M1,sel_ens_M2,sel_ens_M3,scaled_ens_M1,scaled_ens_M2,scaled_ens_M3,ens_MCN):
+             st_ens_LC_NR,sel_ens_M1,sel_ens_M2,sel_ens_M3,scaled_ens_M1,scaled_ens_M2,scaled_ens_M3,ens_MCN,yolov11):
     import streamlit as st
     import cv2
     import os
@@ -367,8 +367,8 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
         cwd = os.getcwd()
         #print("Current working directory:", cwd)
         # Set directory
-        from ultralytics import YOLO
-        model = YOLO("./yolov11_seg_MCN_best.pt")
+        #from ultralytics import YOLO
+        model = yolov11 #YOLO("./yolov11_seg_MCN_best.pt")
         # Input/output
         ############################
         output_path = "./images_YOLOV11/V11_input.png"
@@ -986,6 +986,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
 # #
 
 # print('final_impression',imp_result)
+
 
 
 
