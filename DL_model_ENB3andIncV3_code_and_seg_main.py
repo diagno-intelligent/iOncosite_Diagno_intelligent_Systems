@@ -4,7 +4,7 @@ def fsdf(image_path,eff_model,inc_model):
     max_confidence_ML=90
     return imp_result, max_confidence_ML
 
-def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens):
+def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,ens_scaler_rf_chi2,ens_scaler_xgb_chi2,ens_scaler_rf_mi):
     import streamlit as st
     import cv2
     import os
@@ -214,7 +214,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens)
         return scaler.transform(X)
 
     # Define the path to the scaler file
-    scaler_path = r"./Ensemble_model/selected_models/scaler_ALL_FEATURE_LC_mass_other_rf_chi2_BOTH__min_max_w_fec.pkl"
+    scaler_path = ens_scaler_rf_chi2#r"./Ensemble_model/selected_models/scaler_ALL_FEATURE_LC_mass_other_rf_chi2_BOTH__min_max_w_fec.pkl"
     # Print the path to verify
     X_test1 = pd.DataFrame(scale_datasets(X1, scaler_path))
     with open(f"./Ensemble_model/selected_models/selected_features_LC_mass_others_rf_chi2_BOTH_w_fec_200.txt", 'r') as file:
@@ -249,7 +249,8 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens)
             scaler = pickle.load(scaler_file)
         return scaler.transform(X)
     # Define the path to the scaler file
-    scaler_path = r"./Ensemble_model/selected_models/scaler_ALL_FEATURE_2_LC_mass_other_xgb_chi2__min_max_K_{k}.pkl"
+    scaler_path = ens_scaler_xgb_chi2
+    #r"./Ensemble_model/selected_models/scaler_ALL_FEATURE_2_LC_mass_other_xgb_chi2__min_max_K_{k}.pkl"
     # Print the path to verify
     X_test1 = pd.DataFrame(scale_datasets(X1, scaler_path))
     with open(f"./Ensemble_model/selected_models/selected_features_2_LC_mass_other_xgb_chi2_k150.txt", 'r') as file:
@@ -279,7 +280,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens)
             scaler = pickle.load(scaler_file)
         return scaler.transform(X)
     # Define the path to the scaler file
-    scaler_path = r"./Ensemble_model/selected_models/scaler_ALL_FEATURE_LC_mass_other_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl"
+    scaler_path =ens_scaler_rf_mi# r"./Ensemble_model/selected_models/scaler_ALL_FEATURE_LC_mass_other_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl"
 
     # Print the path to verify
     X_test1 = pd.DataFrame(scale_datasets(X1, scaler_path))
@@ -985,4 +986,5 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens)
 # #
 
 # print('final_impression',imp_result)
+
 
