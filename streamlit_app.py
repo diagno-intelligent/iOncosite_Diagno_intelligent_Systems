@@ -10,57 +10,63 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 import os
-import gdown
+from huggingface_hub import whoami
+############ huggiface
+# Set token temporarily
+HF_TOKEN = "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"
+
+os.environ["HUGGINGFACE_HUB_TOKEN"] = st.secrets["HF_TOKEN"]
+print(whoami())
 ########### efficientnetb3 and inceptionv3 model
-@st.cache_resource
-def load_eff_model():
-    file_id = "14Nv2fGaPe97Qrik6cWPGaa5npcScDLhw"
-    url = f"https://drive.google.com/uc?id={file_id}"
-    output = "model.keras"
-    if not os.path.exists(output):  # download only if missing
-        with st.spinner("Downloading EfficientNetB3 model..."):
-            gdown.download(url, output, quiet=False)
-    return keras.models.load_model(output, compile=False)
-
-@st.cache_resource
-def load_inc_model():
-    file_id = "1uDY-p3KYFimHFhUlnhGL9z3B1Wy9EvxV"
-    url = f"https://drive.google.com/uc?id={file_id}"
-    output = "inceptionv3_model.keras"
-    if not os.path.exists(output):  # download only if missing
-        with st.spinner("Downloading InceptionV3 model..."):
-            gdown.download(url, output, quiet=False)
-    return keras.models.load_model(output, compile=False)
-eff_model = load_eff_model()
-inc_model = load_inc_model()
-#################  load ML model
-import joblib  # for loading .pkl models
-#https://drive.google.com/file/d/1mveJZtayAeR6ZjrF_ZT_2r1BrA2moE9C/view?usp=sharing
-@st.cache_resource
-def load_rf_model_1():
-    file_id = "1mveJZtayAeR6ZjrF_ZT_2r1BrA2moE9C"
-    output = "lbm_BOTH_rf_model1.pkl"
-    url = f"https://drive.google.com/uc?id={file_id}"
-    if not os.path.exists(output):  # only download once
-        with st.spinner("Downloading RF/SVM model 1..."):
-            gdown.download(url, output, quiet=False)
-    st.write("Model 1 file size:", os.path.getsize(output), "bytes")
-    return joblib.load(output)
-#https://drive.google.com/file/d/1qSABFiDp4pAO2bVv-vc-E8GVrmyAGX3_/view?usp=sharing
-@st.cache_resource
-def load_rf_model_2():
-    file_id = "1qSABFiDp4pAO2bVv-vc-E8GVrmyAGX3_"
-    output = "lbm_BOTH_rf_model_v21.pkl"
-    url = f"https://drive.google.com/uc?id={file_id}"
-    if not os.path.exists(output):  # only download once
-        with st.spinner("Downloading RF/SVM model 2..."):
-            gdown.download(url, output, quiet=False)
-    st.write("Model 2 file size:", os.path.getsize(output), "bytes")
-    return joblib.load(output)
-
-# Load models once, cached
-rf_model_1 = load_rf_model_1()
-rf_model_2 = load_rf_model_2()
+# @st.cache_resource
+# def load_eff_model():
+#     file_id = "14Nv2fGaPe97Qrik6cWPGaa5npcScDLhw"
+#     url = f"https://drive.google.com/uc?id={file_id}"
+#     output = "model.keras"
+#     if not os.path.exists(output):  # download only if missing
+#         with st.spinner("Downloading EfficientNetB3 model..."):
+#             gdown.download(url, output, quiet=False)
+#     return keras.models.load_model(output, compile=False)
+#
+# @st.cache_resource
+# def load_inc_model():
+#     file_id = "1uDY-p3KYFimHFhUlnhGL9z3B1Wy9EvxV"
+#     url = f"https://drive.google.com/uc?id={file_id}"
+#     output = "inceptionv3_model.keras"
+#     if not os.path.exists(output):  # download only if missing
+#         with st.spinner("Downloading InceptionV3 model..."):
+#             gdown.download(url, output, quiet=False)
+#     return keras.models.load_model(output, compile=False)
+# eff_model = load_eff_model()
+# inc_model = load_inc_model()
+# #################  load ML model
+# import joblib  # for loading .pkl models
+# #https://drive.google.com/file/d/1mveJZtayAeR6ZjrF_ZT_2r1BrA2moE9C/view?usp=sharing
+# @st.cache_resource
+# def load_rf_model_1():
+#     file_id = "1mveJZtayAeR6ZjrF_ZT_2r1BrA2moE9C"
+#     output = "lbm_BOTH_rf_model1.pkl"
+#     url = f"https://drive.google.com/uc?id={file_id}"
+#     if not os.path.exists(output):  # only download once
+#         with st.spinner("Downloading RF/SVM model 1..."):
+#             gdown.download(url, output, quiet=False)
+#     st.write("Model 1 file size:", os.path.getsize(output), "bytes")
+#     return joblib.load(output)
+# #https://drive.google.com/file/d/1qSABFiDp4pAO2bVv-vc-E8GVrmyAGX3_/view?usp=sharing
+# @st.cache_resource
+# def load_rf_model_2():
+#     file_id = "1qSABFiDp4pAO2bVv-vc-E8GVrmyAGX3_"
+#     output = "lbm_BOTH_rf_model_v21.pkl"
+#     url = f"https://drive.google.com/uc?id={file_id}"
+#     if not os.path.exists(output):  # only download once
+#         with st.spinner("Downloading RF/SVM model 2..."):
+#             gdown.download(url, output, quiet=False)
+#     st.write("Model 2 file size:", os.path.getsize(output), "bytes")
+#     return joblib.load(output)
+#
+# # Load models once, cached
+# rf_model_1 = load_rf_model_1()
+# rf_model_2 = load_rf_model_2()
 
 
 
