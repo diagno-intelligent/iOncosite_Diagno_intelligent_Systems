@@ -34,22 +34,22 @@ def load_inc_model():
 
 #################  load ML model
 import joblib  # for loading .pkl models
-#https://drive.google.com/file/d/1UMlaYUviNcpX1BWXWzHel1vxiGjlW4s_/view?usp=sharing
+#https://drive.google.com/file/d/1mveJZtayAeR6ZjrF_ZT_2r1BrA2moE9C/view?usp=sharing
 @st.cache_resource
 def load_rf_model_1():
-    file_id = "1UMlaYUviNcpX1BWXWzHel1vxiGjlW4s_"
-    output = "lbm_BOTH_rf_model.pkl"
+    file_id = "1mveJZtayAeR6ZjrF_ZT_2r1BrA2moE9C"
+    output = "lbm_BOTH_rf_model1.pkl"
     url = f"https://drive.google.com/uc?id={file_id}"
     if not os.path.exists(output):  # only download once
         with st.spinner("Downloading RF/SVM model 1..."):
             gdown.download(url, output, quiet=False)
     st.write("Model 1 file size:", os.path.getsize(output), "bytes")
     return joblib.load(output)
-#https://drive.google.com/file/d/1HVntLWznlMS_F_wM5yMW7U4QoqhOXEEd/view?usp=sharing
+#https://drive.google.com/file/d/1qSABFiDp4pAO2bVv-vc-E8GVrmyAGX3_/view?usp=sharing
 @st.cache_resource
 def load_rf_model_2():
-    file_id = "1HVntLWznlMS_F_wM5yMW7U4QoqhOXEEd"
-    output = "lbm_BOTH_rf_model_v2.pkl"
+    file_id = "1qSABFiDp4pAO2bVv-vc-E8GVrmyAGX3_"
+    output = "lbm_BOTH_rf_model_v21.pkl"
     url = f"https://drive.google.com/uc?id={file_id}"
     if not os.path.exists(output):  # only download once
         with st.spinner("Downloading RF/SVM model 2..."):
