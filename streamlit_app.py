@@ -75,11 +75,49 @@ ens_scaler_rf_mi = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="scaler_ALL_FEATURE_LC_mass_other_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl"
 )
+## ens model
 model_path = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="stacked_ensemble_model_ML_LCmass_others.pkl"
 )
 st_ens_LC_NR=joblib.load(model_path)
+################# selected file
+model_path = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="1_MCN_rf_model_f_classif_fec_51_train_acc1.0_test_acc1.0.pkl"
+)
+sel_ens_M1=joblib.load(model_path)
+model_path = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="2_MCN_rf_model_mutual_info_classif_fec_51_train_acc1.0_test_acc1.0.pkl"
+)
+sel_ens_M2=joblib.load(model_path)
+model_path = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="3_MCN_xgb_mutual_info_classif_fec_51_train_acc1.0_test_acc1.0.pkl"
+)
+sel_ens_M3=joblib.load(model_path)
+
+#ens model MCN
+model_path = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="stacked_ensemble_model_ML_MCN.pkl"
+)
+ens_MCN=joblib.load(model_path)
+### SELECTED_SCALED
+scaled_ens_M1 = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="1_scaler_ALL_FEATURE_5m_SCORE_rf_f_classif_BOTH__min_max_w_fec.pkl"
+)
+scaled_ens_M2 = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="2_scaler_ALL_FEATURE_5m_SCORE_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl"
+)
+scaled_ens_M3 = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="3_scaler_ALL_FEATURE_3_MCN_xgb_mutual_info_classif__min_max_K_{k}.pkl"
+) 
+
 # ----------------------------
 # Optional: Check token
 # ----------------------------
@@ -1174,7 +1212,7 @@ with col2:
         from DL_model_ENB3andIncV3_code_and_seg_main import full_code
 
         imp_result,max_confidence_ML = full_code(output_path, eff_model, inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,ens_scaler_rf_chi2,ens_scaler_xgb_chi2,ens_scaler_rf_mi,
-                                                st_ens_LC_NR)
+                                                st_ens_LC_NR,sel_ens_M1,sel_ens_M2,sel_ens_M3,scaled_ens_M1,scaled_ens_M2,scaled_ens_M3,ens_MCN)
 
         print('final_impression', imp_result)
         #print('output image path :', imp_image_out)
