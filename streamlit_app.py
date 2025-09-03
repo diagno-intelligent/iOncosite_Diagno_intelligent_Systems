@@ -75,10 +75,11 @@ ens_scaler_rf_mi = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="scaler_ALL_FEATURE_LC_mass_other_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl"
 )
-st_ens_LC_NR = hf_hub_download(
+model_path = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="stacked_ensemble_model_ML_LCmass_others.pkl"
 )
+st_ens_LC_NR=joblib.load(model_path)
 # ----------------------------
 # Optional: Check token
 # ----------------------------
