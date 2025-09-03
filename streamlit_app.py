@@ -10,17 +10,22 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 import os
-from huggingface_hub import whoami
-############ huggiface
-# Set token temporarily
-#HF_TOKEN = "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"
+from huggingface_hub import hf_hub_download, whoami
 
-from huggingface_hub import hf_hub_download
 # ----------------------------
-# Set Hugging Face token
+# Set Hugging Face token safely
 # ----------------------------
-os.environ["HUGGINGFACE_HUB_TOKEN"] = st.secrets["HF_TOKEN"]
-print(whoami())
+hf_token = st.secrets["HF_TOKEN"]
+os.environ["HUGGINGFACE_HUB_TOKEN"] = hf_token
+
+# ----------------------------
+# Optional: Check token
+# ----------------------------
+try:
+    user_info = whoami()  # This should succeed now
+    st.write("Logged in as:", user_info["name"])
+except Exception as e:
+    st.error(f"Token is invalid or missing: {e}")
 ########### efficientnetb3 and inceptionv3 model
 # @st.cache_resource
 # def load_eff_model():
