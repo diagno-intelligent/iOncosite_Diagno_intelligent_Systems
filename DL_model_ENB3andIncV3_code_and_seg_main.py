@@ -290,7 +290,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
     selected_feature_names = X1.columns[selected_feature_indices]
     # Google Drive file ID for the new model
     # Load model
-    loaded_SVM_model = rf_mi_en#joblib.load()
+    loaded_SVM_model = rf_mi_ens #joblib.load()
     st.success("New model loaded successfully!")
 
     #loaded_SVM_model = joblib.load(f"./Ensemble_model/selected_models/lbm_BOTH_rf_model_mutual_info_classif_w_fec_150_train_acc1.0_test_acc0.914235294117647.pkl")
@@ -986,6 +986,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
 # #
 
 # print('final_impression',imp_result)
+
 
 
 
