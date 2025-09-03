@@ -58,9 +58,9 @@ def load_rf_model_2():
     return joblib.load(output)
 
 # Load models once, cached
-
-rf_model_2 = load_rf_model_2()
 rf_model_1 = load_rf_model_1()
+rf_model_2 = load_rf_model_2()
+
 
 
 # Load models (cached, won’t redownload on each rerun)
