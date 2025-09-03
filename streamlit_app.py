@@ -63,6 +63,19 @@ model_path = hf_hub_download(
     filename="lbm_BOTH_rf_model_mutual_info_classif_w_fec_150_train_acc1.0_test_acc0.914235294117647.pkl"
 )
 rf_mi_ens = joblib.load(model_path)
+##### loading sclare
+ens_scaler_rf_chi2 = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="scaler_ALL_FEATURE_LC_mass_other_rf_chi2_BOTH__min_max_w_fec.pkl"
+)
+ens_scaler_xgb_chi2 = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="scaler_ALL_FEATURE_2_LC_mass_other_xgb_chi2__min_max_K_{k}.pkl"
+)
+ens_scaler_rf_mi = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="scaler_ALL_FEATURE_LC_mass_other_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl"
+)
 # ----------------------------
 # Optional: Check token
 # ----------------------------
@@ -1156,7 +1169,7 @@ with col2:
         import DL_model_ENB3andIncV3_code_and_seg_main
         from DL_model_ENB3andIncV3_code_and_seg_main import full_code
 
-        imp_result,max_confidence_ML = full_code(output_path, eff_model, inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens)
+        imp_result,max_confidence_ML = full_code(output_path, eff_model, inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,ens_scaler_rf_chi2,ens_scaler_xgb_chi2,ens_scaler_rf_mi)
 
         print('final_impression', imp_result)
         #print('output image path :', imp_image_out)
