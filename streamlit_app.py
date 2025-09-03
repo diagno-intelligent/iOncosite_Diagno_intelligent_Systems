@@ -29,6 +29,15 @@ model_path = hf_hub_download(
 
 # Load it in Keras
 eff_model = keras.models.load_model(model_path)
+
+# Download the model file
+model_path = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="model_LCm_others_V3_20d_64b_m299_ly1024_ly512.keras"
+)
+
+# Load it in Keras
+inc_model = keras.models.load_model(model_path)
 # ----------------------------
 # Optional: Check token
 # ----------------------------
