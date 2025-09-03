@@ -15,6 +15,10 @@ from huggingface_hub import whoami
 # Set token temporarily
 #HF_TOKEN = "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"
 
+from huggingface_hub import hf_hub_download
+# ----------------------------
+# Set Hugging Face token
+# ----------------------------
 os.environ["HUGGINGFACE_HUB_TOKEN"] = st.secrets["HF_TOKEN"]
 print(whoami())
 ########### efficientnetb3 and inceptionv3 model
