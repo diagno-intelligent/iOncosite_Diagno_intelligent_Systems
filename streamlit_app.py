@@ -13,117 +13,154 @@ import os
 from huggingface_hub import hf_hub_download, whoami
 import joblib
 # ----------------------------
+# Set Hugging Face token safely 
+# ----------------------------
 # Set Hugging Face token safely
 # ----------------------------
 hf_token = st.secrets["HF_TOKEN"]
 os.environ["HUGGINGFACE_HUB_TOKEN"] = hf_token
-##3
-from huggingface_hub import hf_hub_download
-### load yolov11
-#from ultralytics import YOLO
-model_path = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="yolov11_seg_MCN_best.pt"
-)
-yolov11 = model_path
-from tensorflow import keras
 
-# Download the model file
-model_path = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="model_LCm_others_B3_20d_8b_m300_ly1024_ly512.keras"
-)
 
-# Load it in Keras
-eff_model = keras.models.load_model(
-        model_path,
-        compile=False)
-# Download the model file
-model_path = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="model_LCm_others_V3_20d_64b_m299_ly1024_ly512.keras"
-)
+# ----------------------------
+# Deep Learning Models
+# ----------------------------
+@st.cache_resource
+def load_yolo():
+    model_path = hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename="yolov11_seg_MCN_best.pt"
+    )
+    return model_path   # ultralytics.YOLO(model_path) if you need to use YOLO class
 
-# Load it in Keras
-inc_model = keras.models.load_model(
-        model_path,
-        compile=False)
 
-#### loading ML
-# Load Random Forest (Chi2)
-model_path = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="lbm_BOTH_rf_model_chi2_w_fec_200_train_acc1.0_test_acc0.914235294117647.pkl"
-)
-rf_chi2_ens=joblib.load(model_path)
-# Load XGBoost (Chi2)
-model_path = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="2_LC_mass_other_xgb_chi2_fec_150_acc1.0.pkl"
-)
-xgb_chi2_ens=joblib.load(model_path)
+@st.cache_resource
+def load_eff_model():
+    model_path = hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename="model_LCm_others_B3_20d_8b_m300_ly1024_ly512.keras"
+    )
+    return keras.models.load_model(model_path, compile=False)
 
-# Load Random Forest (Mutual Info)
-model_path =hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="lbm_BOTH_rf_model_mutual_info_classif_w_fec_150_train_acc1.0_test_acc0.914235294117647.pkl"
-)
-rf_mi_ens=joblib.load(model_path)
-##### loading sclare
-ens_scaler_rf_chi2 = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="scaler_ALL_FEATURE_LC_mass_other_rf_chi2_BOTH__min_max_w_fec.pkl"
-)
-ens_scaler_xgb_chi2 = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="scaler_ALL_FEATURE_2_LC_mass_other_xgb_chi2__min_max_K_{k}.pkl"
-)
-ens_scaler_rf_mi = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="scaler_ALL_FEATURE_LC_mass_other_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl"
-)
-## ens model
-model_path = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="stacked_ensemble_model_ML_LCmass_others.pkl"
-)
-st_ens_LC_NR=joblib.load(model_path)
-################# selected file
-model_path = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="1_MCN_rf_model_f_classif_fec_51_train_acc1.0_test_acc1.0.pkl"
-)
-sel_ens_M1=joblib.load(model_path)
-model_path = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="2_MCN_rf_model_mutual_info_classif_fec_51_train_acc1.0_test_acc1.0.pkl"
-)
-sel_ens_M2=joblib.load(model_path)
-model_path = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="3_MCN_xgb_mutual_info_classif_fec_51_train_acc1.0_test_acc1.0.pkl"
-)
-sel_ens_M3=joblib.load(model_path)
 
-#ens model MCN
-model_path = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="stacked_ensemble_model_ML_MCN.pkl"
-)
-ens_MCN=joblib.load(model_path)
-### SELECTED_SCALED
-scaled_ens_M1 = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="1_scaler_ALL_FEATURE_5m_SCORE_rf_f_classif_BOTH__min_max_w_fec.pkl"
-)
-scaled_ens_M2 = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="2_scaler_ALL_FEATURE_5m_SCORE_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl"
-)
-scaled_ens_M3 = hf_hub_download(
-    repo_id="DiagnoIntelligentSytem/lung-xray-models",
-    filename="3_scaler_ALL_FEATURE_3_MCN_xgb_mutual_info_classif__min_max_K_{k}.pkl"
-) 
+@st.cache_resource
+def load_inc_model():
+    model_path = hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename="model_LCm_others_V3_20d_64b_m299_ly1024_ly512.keras"
+    )
+    return keras.models.load_model(model_path, compile=False)
+
+
+# ----------------------------
+# Machine Learning Models
+# ----------------------------
+@st.cache_resource
+def load_rf_chi2():
+    model_path = hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename="lbm_BOTH_rf_model_chi2_w_fec_200_train_acc1.0_test_acc0.914235294117647.pkl"
+    )
+    return joblib.load(model_path)
+
+
+@st.cache_resource
+def load_xgb_chi2():
+    model_path = hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename="2_LC_mass_other_xgb_chi2_fec_150_acc1.0.pkl"
+    )
+    return joblib.load(model_path)
+
+
+@st.cache_resource
+def load_rf_mi():
+    model_path = hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename="lbm_BOTH_rf_model_mutual_info_classif_w_fec_150_train_acc1.0_test_acc0.914235294117647.pkl"
+    )
+    return joblib.load(model_path)
+
+
+@st.cache_resource
+def load_stacked_LC_NR():
+    model_path = hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename="stacked_ensemble_model_ML_LCmass_others.pkl"
+    )
+    return joblib.load(model_path)
+
+
+@st.cache_resource
+def load_sel_ens_M1():
+    model_path = hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename="1_MCN_rf_model_f_classif_fec_51_train_acc1.0_test_acc1.0.pkl"
+    )
+    return joblib.load(model_path)
+
+
+@st.cache_resource
+def load_sel_ens_M2():
+    model_path = hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename="2_MCN_rf_model_mutual_info_classif_fec_51_train_acc1.0_test_acc1.0.pkl"
+    )
+    return joblib.load(model_path)
+
+
+@st.cache_resource
+def load_sel_ens_M3():
+    model_path = hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename="3_MCN_xgb_mutual_info_classif_fec_51_train_acc1.0_test_acc1.0.pkl"
+    )
+    return joblib.load(model_path)
+
+
+@st.cache_resource
+def load_ens_MCN():
+    model_path = hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename="stacked_ensemble_model_ML_MCN.pkl"
+    )
+    return joblib.load(model_path)
+
+
+# ----------------------------
+# Scalers (use cache_data since they are small)
+# ----------------------------
+@st.cache_data
+def load_scaler(filename: str):
+    return hf_hub_download(
+        repo_id="DiagnoIntelligentSytem/lung-xray-models",
+        filename=filename
+    )
+
+
+# ----------------------------
+# Initialize all models once
+# ----------------------------
+yolov11 = load_yolo()
+eff_model = load_eff_model()
+inc_model = load_inc_model()
+
+rf_chi2_ens = load_rf_chi2()
+xgb_chi2_ens = load_xgb_chi2()
+rf_mi_ens = load_rf_mi()
+st_ens_LC_NR = load_stacked_LC_NR()
+
+sel_ens_M1 = load_sel_ens_M1()
+sel_ens_M2 = load_sel_ens_M2()
+sel_ens_M3 = load_sel_ens_M3()
+ens_MCN = load_ens_MCN()
+
+ens_scaler_rf_chi2 = load_scaler("scaler_ALL_FEATURE_LC_mass_other_rf_chi2_BOTH__min_max_w_fec.pkl")
+ens_scaler_xgb_chi2 = load_scaler("scaler_ALL_FEATURE_2_LC_mass_other_xgb_chi2__min_max_K_{k}.pkl")
+ens_scaler_rf_mi = load_scaler("scaler_ALL_FEATURE_LC_mass_other_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl")
+scaled_ens_M1 = load_scaler("1_scaler_ALL_FEATURE_5m_SCORE_rf_f_classif_BOTH__min_max_w_fec.pkl")
+scaled_ens_M2 = load_scaler("2_scaler_ALL_FEATURE_5m_SCORE_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl")
+scaled_ens_M3 = load_scaler("3_scaler_ALL_FEATURE_3_MCN_xgb_mutual_info_classif__min_max_K_{k}.pkl")
+
 
 # ----------------------------
 # Optional: Check token
