@@ -171,10 +171,19 @@ st.session_state.run_count += 1
 st.write(f"Run count: {st.session_state.run_count}")
 
 # ✅ Every 3 runs, clear temporary memory (not model)
+import gc, tensorflow as tf
+
 if st.session_state.run_count % 3 == 0:
+    st.cache_data.clear()
     gc.collect()
-    st.cache_data.clear()   # clears only cached data, not model
-    st.write("🧹 Cleared temporary cache & freed memory (model kept).")
+
+    try:
+        tf.keras.backend.clear_session()   # clear TF graph/session
+    except Exception:
+        pass
+
+    st.write("🧹 Cleared temporary cache, garbage, and TF session")
+
 # ----------------------------
 # Optional: Check token
 # ----------------------------
