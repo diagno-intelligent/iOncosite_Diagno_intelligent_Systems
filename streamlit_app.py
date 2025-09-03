@@ -35,14 +35,11 @@ def load_inc_model():
     return keras.models.load_model(output, compile=False)
 
 #################  load ML model
-import gdown
-import streamlit as st
-import os
 import joblib  # for loading .pkl models
 
 @st.cache_resource
 def load_rf_model_1():
-    file_id = "10Z-BCAmrStFZcedCNYLD6BIc0WU_8KXb"
+    file_id = "1WC0aiE6LBLLc74n9VeA7WaAN5UPp6PdH"
     output = "lbm_BOTH_rf_model.pkl"
     url = f"https://drive.google.com/uc?id={file_id}"
     if not os.path.exists(output):  # only download once
@@ -53,7 +50,7 @@ def load_rf_model_1():
 
 @st.cache_resource
 def load_rf_model_2():
-    file_id = "1XqGh76vPYDj1avAGI-nv0-R-YhPq5Gyw"
+    file_id = "1qxmsyVTyGoYboQXpK6sAf2_GgFutaBg7"
     output = "lbm_BOTH_rf_model_v2.pkl"
     url = f"https://drive.google.com/uc?id={file_id}"
     if not os.path.exists(output):  # only download once
