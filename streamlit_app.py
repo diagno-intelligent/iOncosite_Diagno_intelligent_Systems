@@ -20,12 +20,12 @@ os.environ["HUGGINGFACE_HUB_TOKEN"] = hf_token
 ##3
 from huggingface_hub import hf_hub_download
 ### load yolov11
-from ultralytics import YOLO
+#from ultralytics import YOLO
 model_path = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="yolov11_seg_MCN_best.pt"
 )
-yolov11 = YOLO(model_path)
+yolov11 = model_path
 from tensorflow import keras
 
 # Download the model file
