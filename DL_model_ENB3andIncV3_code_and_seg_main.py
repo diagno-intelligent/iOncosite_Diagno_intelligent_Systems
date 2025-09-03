@@ -4,7 +4,7 @@ def fsdf(image_path,eff_model,inc_model):
     max_confidence_ML=90
     return imp_result, max_confidence_ML
 
-def full_code(image_path,eff_model,inc_model,rf_model_1,rf_model_2):
+def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens):
     import streamlit as st
     import cv2
     import os
@@ -222,7 +222,7 @@ def full_code(image_path,eff_model,inc_model,rf_model_1,rf_model_2):
     X_test_selected1 = X_test1.iloc[:, selected_feature_indices]
     selected_feature_names = X1.columns[selected_feature_indices]
     # Load model
-    loaded_SVM_model = joblib.load(rf_model_1)
+    loaded_SVM_model = joblib.load(rf_chi2_enss)
     st.success("Model loaded successfully!")
     st.success("Model loaded successfully!")
     #loaded_SVM_model = joblib.load(f"./Ensemble_model/selected_models/lbm_BOTH_rf_model_chi2_w_fec_200_train_acc1.0_test_acc0.914235294117647.pkl")
@@ -256,7 +256,7 @@ def full_code(image_path,eff_model,inc_model,rf_model_1,rf_model_2):
         selected_feature_indices = list(map(int, file.read().split(',')))
     X_test_selected1 = X_test1.iloc[:, selected_feature_indices]
     selected_feature_names = X1.columns[selected_feature_indices]
-    loaded_SVM_model = joblib.load(f"./Ensemble_model/selected_models/2_LC_mass_other_xgb_chi2_fec_150_acc1.0.pkl")
+    loaded_SVM_model = xgb_chi2_ens #joblib.load(f"./Ensemble_model/selected_models/2_LC_mass_other_xgb_chi2_fec_150_acc1.0.pkl")
     y_pred1=xgb_chi2_LC_NR = loaded_SVM_model.predict(X_test_selected1)
     #print(y_pred1)
     for i in range (0,len(y_pred1)):
@@ -289,7 +289,7 @@ def full_code(image_path,eff_model,inc_model,rf_model_1,rf_model_2):
     selected_feature_names = X1.columns[selected_feature_indices]
     # Google Drive file ID for the new model
     # Load model
-    loaded_SVM_model = joblib.load(rf_model_2)
+    loaded_SVM_model = joblib.load(rf_mi_en)
     st.success("New model loaded successfully!")
 
     #loaded_SVM_model = joblib.load(f"./Ensemble_model/selected_models/lbm_BOTH_rf_model_mutual_info_classif_w_fec_150_train_acc1.0_test_acc0.914235294117647.pkl")
@@ -985,3 +985,4 @@ def full_code(image_path,eff_model,inc_model,rf_model_1,rf_model_2):
 # #
 
 # print('final_impression',imp_result)
+
