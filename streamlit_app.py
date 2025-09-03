@@ -9,7 +9,7 @@ import uuid
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
-import os 
+import os
 import gdown
 ########### efficientnetb3 and inceptionv3 model
 @st.cache_resource
@@ -45,10 +45,10 @@ def load_rf_model_1():
             gdown.download(url, output, quiet=False)
     st.write("Model 1 file size:", os.path.getsize(output), "bytes")
     return joblib.load(output)
-
+#https://drive.google.com/file/d/1of9yp0QOKDl_wkbJUCv9n2oEPSsPn_hi/view?usp=sharing
 @st.cache_resource
 def load_rf_model_2():
-    file_id = "1qxmsyVTyGoYboQXpK6sAf2_GgFutaBg7"
+    file_id = "1of9yp0QOKDl_wkbJUCv9n2oEPSsPn_hi"
     output = "lbm_BOTH_rf_model_v2.pkl"
     url = f"https://drive.google.com/uc?id={file_id}"
     if not os.path.exists(output):  # only download once
