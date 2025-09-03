@@ -5,7 +5,7 @@ def fsdf(image_path,eff_model,inc_model):
     return imp_result, max_confidence_ML
 
 def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,ens_scaler_rf_chi2,ens_scaler_xgb_chi2,ens_scaler_rf_mi,
-             st_ens_LC_NR):
+             st_ens_LC_NR,sel_ens_M1,sel_ens_M2,sel_ens_M3,scaled_ens_M1,scaled_ens_M2,scaled_ens_M3,ens_MCN):
     import streamlit as st
     import cv2
     import os
@@ -453,7 +453,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
         ######### ML results
         import ens_modelling_MCN_test_fn
 
-        ens_ML_MCN_output,predicted_proba = ens_modelling_MCN_test_fn.ens_ML_MCN()
+        ens_ML_MCN_output,predicted_proba = ens_modelling_MCN_test_fn.ens_ML_MCN(sel_ens_M1,sel_ens_M2,sel_ens_M3,scaled_ens_M1,scaled_ens_M2,scaled_ens_M3,ens_MCN)
         #print("Ens ML results:", ens_ML_MCN_output)
         predicted_proba=predicted_proba[0]
         conf_ML=predicted_proba[ens_ML_MCN_output]*100
@@ -986,6 +986,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
 # #
 
 # print('final_impression',imp_result)
+
 
 
 
