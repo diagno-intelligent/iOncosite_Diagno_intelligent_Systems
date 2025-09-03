@@ -13,6 +13,7 @@ import os
 from huggingface_hub import hf_hub_download, whoami
 import joblib
 from ultralytics import YOLO
+import gc
 # ----------------------------
 # Set Hugging Face token safely 
 # ----------------------------
@@ -162,7 +163,18 @@ scaled_ens_M1 = load_scaler("1_scaler_ALL_FEATURE_5m_SCORE_rf_f_classif_BOTH__mi
 scaled_ens_M2 = load_scaler("2_scaler_ALL_FEATURE_5m_SCORE_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl")
 scaled_ens_M3 = load_scaler("3_scaler_ALL_FEATURE_3_MCN_xgb_mutual_info_classif__min_max_K_{k}.pkl")
 
+# ✅ Track number of runs
+if "run_count" not in st.session_state:
+    st.session_state.run_count = 0
 
+st.session_state.run_count += 1
+st.write(f"Run count: {st.session_state.run_count}")
+
+# ✅ Every 3 runs, clear temporary memory (not model)
+if st.session_state.run_count % 3 == 0:
+    gc.collect()
+    st.cache_data.clear()   # clears only cached data, not model
+    st.write("🧹 Cleared temporary cache & freed memory (model kept).")
 # ----------------------------
 # Optional: Check token
 # ----------------------------
