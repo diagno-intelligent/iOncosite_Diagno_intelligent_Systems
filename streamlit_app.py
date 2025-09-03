@@ -31,7 +31,8 @@ def load_inc_model():
         with st.spinner("Downloading InceptionV3 model..."):
             gdown.download(url, output, quiet=False)
     return keras.models.load_model(output, compile=False)
-
+eff_model = load_eff_model()
+inc_model = load_inc_model()
 #################  load ML model
 import joblib  # for loading .pkl models
 #https://drive.google.com/file/d/1mveJZtayAeR6ZjrF_ZT_2r1BrA2moE9C/view?usp=sharing
@@ -64,8 +65,7 @@ rf_model_2 = load_rf_model_2()
 
 
 # Load models (cached, won’t redownload on each rerun)
-eff_model = load_eff_model()
-inc_model = load_inc_model()
+
 
 
 
