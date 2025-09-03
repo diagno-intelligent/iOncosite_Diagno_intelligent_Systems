@@ -367,8 +367,8 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
         cwd = os.getcwd()
         #print("Current working directory:", cwd)
         # Set directory
-        #from ultralytics import YOLO
-        model = yolov11 #YOLO("./yolov11_seg_MCN_best.pt")
+        from ultralytics import YOLO
+        model = YOLO(yolov11)#"./yolov11_seg_MCN_best.pt")
         # Input/output
         ############################
         output_path = "./images_YOLOV11/V11_input.png"
@@ -986,6 +986,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
 # #
 
 # print('final_impression',imp_result)
+
 
 
 
