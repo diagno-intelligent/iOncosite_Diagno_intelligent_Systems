@@ -31,7 +31,7 @@ def load_yolo():
         repo_id="DiagnoIntelligentSytem/lung-xray-models",
         filename="yolov11_seg_MCN_best.pt"
     )
-    return ultralytics.YOLO(model_path) if you need to use YOLO class
+    return ultralytics.YOLO(model_path) #if you need to use YOLO class
 
 
 @st.cache_resource
