@@ -76,6 +76,10 @@ ens_scaler_rf_mi = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="scaler_ALL_FEATURE_LC_mass_other_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl"
 )
+st_ens_LC_NR = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="stacked_ensemble_model_ML_LCmass_others.pkl"
+)
 # ----------------------------
 # Optional: Check token
 # ----------------------------
@@ -1169,7 +1173,8 @@ with col2:
         import DL_model_ENB3andIncV3_code_and_seg_main
         from DL_model_ENB3andIncV3_code_and_seg_main import full_code
 
-        imp_result,max_confidence_ML = full_code(output_path, eff_model, inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,ens_scaler_rf_chi2,ens_scaler_xgb_chi2,ens_scaler_rf_mi)
+        imp_result,max_confidence_ML = full_code(output_path, eff_model, inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,ens_scaler_rf_chi2,ens_scaler_xgb_chi2,ens_scaler_rf_mi,
+                                                st_ens_LC_NR)
 
         print('final_impression', imp_result)
         #print('output image path :', imp_image_out)
