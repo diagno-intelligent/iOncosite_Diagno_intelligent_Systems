@@ -13,30 +13,31 @@ from tensorflow import keras
 #https://drive.google.com/file/d/1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m/view?usp=sharing  ##B3
 
 import gdown
-########### efficientnetb3 model
-#url = "https://drive.google.com/file/d/1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m/view?usp=sharing"  # replace with your file id
-#output = "model.keras"
+########### efficientnetb3 and inceptionv3 model
+@st.cache_resource
+def load_eff_model():
+    file_id = "1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m"
+    url = f"https://drive.google.com/uc?id={file_id}"
+    output = "model.keras"
+    if not os.path.exists(output):  # download only if missing
+        with st.spinner("Downloading EfficientNetB3 model..."):
+            gdown.download(url, output, quiet=False)
+    return keras.models.load_model(output, compile=False)
 
-# Google Drive file id
-file_id = "1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m"
-url = f"https://drive.google.com/uc?id={file_id}"
-output = "model.keras"
+@st.cache_resource
+def load_inc_model():
+    file_id = "1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh"
+    url = f"https://drive.google.com/uc?id={file_id}"
+    output = "inceptionv3_model.keras"
+    if not os.path.exists(output):  # download only if missing
+        with st.spinner("Downloading InceptionV3 model..."):
+            gdown.download(url, output, quiet=False)
+    return keras.models.load_model(output, compile=False)
 
-with st.spinner("Downloading model..."):
-    gdown.download(url, output, quiet=False)
+# Load models (cached, won’t redownload on each rerun)
+eff_model = load_eff_model()
+inc_model = load_inc_model()
 
-# Load the model
-eff_model = keras.models.load_model(output, compile=False)
-########### inceptionv3 model
-# InceptionV3 model
-url = "https://drive.google.com/uc?id=1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh"
-output1 = "inceptionv3_model.keras"
-
-with st.spinner("Downloading InceptionV3 model..."):
-    gdown.download(url, output1, quiet=False)
-
-# Load the model
-inc_model = keras.models.load_model(output1, compile=False)
 
 
 
