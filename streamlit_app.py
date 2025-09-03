@@ -177,10 +177,6 @@ if st.session_state.run_count % 3 == 0:
     st.cache_data.clear()
     gc.collect()
 
-    try:
-        tf.keras.backend.clear_session()   # clear TF graph/session
-    except Exception:
-        pass
 
     st.write("🧹 Cleared temporary cache, garbage, and TF session")
 
