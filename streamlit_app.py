@@ -17,7 +17,18 @@ from huggingface_hub import hf_hub_download, whoami
 # ----------------------------
 hf_token = st.secrets["HF_TOKEN"]
 os.environ["HUGGINGFACE_HUB_TOKEN"] = hf_token
+##3
+from huggingface_hub import hf_hub_download
+from tensorflow import keras
 
+# Download the model file
+model_path = hf_hub_download(
+    repo_id="DiagnoIntelligentSytem/lung-xray-models",
+    filename="model_LCm_others_B3_20d_8b_m300_ly1024_ly512.keras"
+)
+
+# Load it in Keras
+eff_model = keras.models.load_model(model_path)
 # ----------------------------
 # Optional: Check token
 # ----------------------------
