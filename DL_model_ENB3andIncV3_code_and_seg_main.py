@@ -1,9 +1,3 @@
-def fsdf(image_path,eff_model,inc_model):
-    print('loaded')
-    imp_result='lung'
-    max_confidence_ML=90
-    return imp_result, max_confidence_ML
-
 def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,ens_scaler_rf_chi2,ens_scaler_xgb_chi2,ens_scaler_rf_mi,
              st_ens_LC_NR,sel_ens_M1,sel_ens_M2,sel_ens_M3,scaled_ens_M1,scaled_ens_M2,scaled_ens_M3,ens_MCN,yolov11):
     import streamlit as st
@@ -33,18 +27,6 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
     # ================================
     # Load models
     # ================================
-    eff_model =eff_model
-    # eff_model = keras.models.load_model(
-    #     "./DL_model_ENB3andIncV3/model_LCm_others_B3_20d_8b_m300_ly1024_ly512.keras",
-    #     compile=False
-    # )
-    #
-    inc_model =inc_model
-    # inc_model = keras.models.load_model(
-    #     "./DL_model_ENB3andIncV3/model_LCm_others_V3_20d_64b_m299_ly1024_ly512.keras",
-    #     compile=False
-    # )
-
     # ================================
     current_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = "output_poly_feret/region_stats_with_class.csv"
@@ -346,6 +328,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
     if (X_stack[0])[0]==0 and (X_stack[0])[2]==0:
         predicted_value[0]=0
     print('predicted_value[0]',predicted_value[0])
+    plt.close('all')
     ########################## segmentation model
     output_path = "./images_YOLOV11/V11_input.png"
     if 1==1:#predicted_value[0]!=1:
@@ -969,23 +952,8 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
 
     return imp_result,max_confidence_ML
 
-# img_path=image_path ="E:/project_new/downloads/chest_xray_14_Multiclass_data/images_011/images/00027833_022.png"
-# # #img_path=image_path ="E:/project_new/downloads/chest_xray_14_Multiclass_data/images_011/images/00027833_022.png"
-# # #img_path=image_path ="E:/project_new/LC_Normal/LC_Normal_resized_data/LC_resized/File_005907_8534.png"
-# # #img_path=image_path ="E:/project_new/LC_Normal/LC_resized_images_cleaned/LC/File_001981_2856.png"
-# # #img_path=image_path ="E:/project_new/downloads/chest_xray_14_Multiclass_data/images_007/images/00014004_038.png"
-# # #"E:\project_new\LC_Normal\LC_Normal_resized_data\LC_resized\File_001981_2856.png"
-# # #img_path=image_path ="E:/project_new/new_5_MCNTS_multiclass_data/all_resized_dicom_png_1024_NN_label_TSCN/File_004723_6810.png" # mass , copd
-# # #img_path=image_path ="E:/project_new/LC_NonLC/LC_with_MASS_images1_resize/File_004802_6931.png"
-# # ###  NN
-# # #img_path=image_path ="E:/project_new\png/resized_images/BATCH6_1/File_011731_17027.png"
-# # #img_path=image_path ="E:/project_new/new_5_MCNTS_multiclass_data/all_resized_dicom_png_1024_NN_label_TSCN/File_000065_114.png"
-# # #
-# #
-# imp_result,max_confidence_ML=full_code(image_path)
-# #
 
-# print('final_impression',imp_result)
+
 
 
 
