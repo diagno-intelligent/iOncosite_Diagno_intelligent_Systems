@@ -28,8 +28,9 @@ model_path = hf_hub_download(
 )
 
 # Load it in Keras
-eff_model = keras.models.load_model(model_path)
-
+eff_model = keras.models.load_model(
+        model_path,
+        compile=False)
 # Download the model file
 model_path = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
@@ -37,7 +38,9 @@ model_path = hf_hub_download(
 )
 
 # Load it in Keras
-inc_model = keras.models.load_model(model_path)
+inc_model = keras.models.load_model(
+        model_path,
+        compile=False)
 
 #### loading ML
 # Load Random Forest (Chi2)
