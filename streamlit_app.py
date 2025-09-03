@@ -34,10 +34,10 @@ def load_inc_model():
 
 #################  load ML model
 import joblib  # for loading .pkl models
-
+#https://drive.google.com/file/d/1p4UEHzhmxQ85UY-On5ml26KTM_ZtqDB_/view?usp=sharing
 @st.cache_resource
 def load_rf_model_1():
-    file_id = "1WC0aiE6LBLLc74n9VeA7WaAN5UPp6PdH"
+    file_id = "1p4UEHzhmxQ85UY-On5ml26KTM_ZtqDB_"
     output = "lbm_BOTH_rf_model.pkl"
     url = f"https://drive.google.com/uc?id={file_id}"
     if not os.path.exists(output):  # only download once
