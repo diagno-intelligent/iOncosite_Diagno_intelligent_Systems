@@ -222,7 +222,7 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
     X_test_selected1 = X_test1.iloc[:, selected_feature_indices]
     selected_feature_names = X1.columns[selected_feature_indices]
     # Load model
-    loaded_SVM_model = joblib.load(rf_chi2_enss)
+    loaded_SVM_model = joblib.load(rf_chi2_ens)
     st.success("Model loaded successfully!")
     st.success("Model loaded successfully!")
     #loaded_SVM_model = joblib.load(f"./Ensemble_model/selected_models/lbm_BOTH_rf_model_chi2_w_fec_200_train_acc1.0_test_acc0.914235294117647.pkl")
@@ -986,5 +986,6 @@ def full_code(image_path,eff_model,inc_model,rf_chi2_ens,xgb_chi2_ens,rf_mi_ens,
 # #
 
 # print('final_impression',imp_result)
+
 
 
