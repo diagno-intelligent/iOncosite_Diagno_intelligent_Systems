@@ -1,7 +1,7 @@
 
 
 # Visualization
-def ens_ML_MCN():
+def ens_ML_MCN(sel_ens_M1,sel_ens_M2,sel_ens_M3,scaled_ens_M1,scaled_ens_M2,scaled_ens_M3,ens_MCN):
     # Data handling
     import numpy as np
     import pandas as pd
@@ -29,7 +29,7 @@ def ens_ML_MCN():
         return scaler.transform(X)
 
     # Define the path to the scaler file
-    scaler_path = r"./selected_models/1_scaler_ALL_FEATURE_5m_SCORE_rf_f_classif_BOTH__min_max_w_fec.pkl"
+    scaler_path =scaled_ens_M1 # r"./selected_models/1_scaler_ALL_FEATURE_5m_SCORE_rf_f_classif_BOTH__min_max_w_fec.pkl"
 
     X_test1 = pd.DataFrame(scale_datasets(X1, scaler_path)) 
     with open(f"./selected_models/1_selected_features_MCN_rf_f_classif_BOTH_w_fec_51.txt", 'r') as file:
@@ -40,9 +40,7 @@ def ens_ML_MCN():
     selected_feature_names = X1.columns[selected_feature_indices]
     #print("Selected features:", selected_feature_names)
 
-    loaded_SVM_model = joblib.load(f"./selected_models/1_MCN_rf_model_f_classif_fec_51_train_acc1.0_test_acc1.0.pkl")
-
-
+    loaded_SVM_model = sel_ens_M1 #joblib.load(f"./selected_models/1_MCN_rf_model_f_classif_fec_51_train_acc1.0_test_acc1.0.pkl")
     y_pred1=rf_annova_MCN = loaded_SVM_model.predict(X_test_selected1)
     print('y_pred1',y_pred1)
 
@@ -69,8 +67,7 @@ def ens_ML_MCN():
         return scaler.transform(X)
 
     # Define the path to the scaler file
-    scaler_path = r"./selected_models/2_scaler_ALL_FEATURE_5m_SCORE_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl"
-
+    scaler_path =scaled_ens_M2 # r"./selected_models/2_scaler_ALL_FEATURE_5m_SCORE_rf_mutual_info_classif_BOTH__min_max_w_fec.pkl"
     X_test1 = pd.DataFrame(scale_datasets(X1, scaler_path)) 
     with open(f"./selected_models/2_selected_features_MCN_rf_mutual_info_classif_BOTH_w_fec_51.txt", 'r') as file:
         selected_feature_indices = list(map(int, file.read().split(',')))
@@ -79,7 +76,7 @@ def ens_ML_MCN():
 
     selected_feature_names = X1.columns[selected_feature_indices] 
 
-    loaded_SVM_model = joblib.load(f"./selected_models/2_MCN_rf_model_mutual_info_classif_fec_51_train_acc1.0_test_acc1.0.pkl")
+    loaded_SVM_model = sel_ens_M2 #joblib.load(f"./selected_models/2_MCN_rf_model_mutual_info_classif_fec_51_train_acc1.0_test_acc1.0.pkl")
 
 
     y_pred1=RF_MI_MCN = loaded_SVM_model.predict(X_test_selected1)
@@ -109,7 +106,7 @@ def ens_ML_MCN():
         return scaler.transform(X)
 
     # Define the path to the scaler file
-    scaler_path = r"./selected_models/3_scaler_ALL_FEATURE_3_MCN_xgb_mutual_info_classif__min_max_K_{k}.pkl"
+    scaler_path =scaled_ens_M3#  r"./selected_models/3_scaler_ALL_FEATURE_3_MCN_xgb_mutual_info_classif__min_max_K_{k}.pkl"
 
     X_test1 = pd.DataFrame(scale_datasets(X1, scaler_path)) 
     with open(f"./selected_models/3_selected_features_3_MCN_xgb_mutual_info_classif_k51.txt", 'r') as file:
@@ -118,7 +115,7 @@ def ens_ML_MCN():
     X_test_selected1 = X_test1.iloc[:, selected_feature_indices]
 
     selected_feature_names = X1.columns[selected_feature_indices] 
-    loaded_SVM_model = joblib.load(f"./selected_models/3_MCN_xgb_mutual_info_classif_fec_51_train_acc1.0_test_acc1.0.pkl")
+    loaded_SVM_model = sel_ens_M3# joblib.load(f"./selected_models/3_MCN_xgb_mutual_info_classif_fec_51_train_acc1.0_test_acc1.0.pkl")
 
 
     y_pred1=xgb_mi_MCN = loaded_SVM_model.predict(X_test_selected1)
@@ -160,7 +157,7 @@ def ens_ML_MCN():
 
 
     # Use the loaded model for prediction on the single test value 
-    loaded_model = joblib.load('stacked_ensemble_model_ML_MCN.pkl')
+    loaded_model = ens_MCN #joblib.load('stacked_ensemble_model_ML_MCN.pkl')
     predicted_value = (loaded_model.predict(X_stack))[0]
     print('st_predicted_value',predicted_value)
     predicted_proba = loaded_model.predict_proba(X_stack)
@@ -169,6 +166,7 @@ def ens_ML_MCN():
 
     print("Class Probabilities:", predicted_proba)
     return predicted_value,predicted_proba
+
 
 
 
