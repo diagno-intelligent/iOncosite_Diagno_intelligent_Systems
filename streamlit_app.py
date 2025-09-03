@@ -34,6 +34,39 @@ def load_inc_model():
             gdown.download(url, output, quiet=False)
     return keras.models.load_model(output, compile=False)
 
+#################  load ML model
+import gdown
+import streamlit as st
+import os
+import joblib  # for loading .pkl models
+
+@st.cache_resource
+def load_rf_model_1():
+    file_id = "10Z-BCAmrStFZcedCNYLD6BIc0WU_8KXb"
+    output = "lbm_BOTH_rf_model.pkl"
+    url = f"https://drive.google.com/uc?id={file_id}"
+    if not os.path.exists(output):  # only download once
+        with st.spinner("Downloading RF/SVM model 1..."):
+            gdown.download(url, output, quiet=False)
+    st.write("Model 1 file size:", os.path.getsize(output), "bytes")
+    return joblib.load(output)
+
+@st.cache_resource
+def load_rf_model_2():
+    file_id = "1XqGh76vPYDj1avAGI-nv0-R-YhPq5Gyw"
+    output = "lbm_BOTH_rf_model_v2.pkl"
+    url = f"https://drive.google.com/uc?id={file_id}"
+    if not os.path.exists(output):  # only download once
+        with st.spinner("Downloading RF/SVM model 2..."):
+            gdown.download(url, output, quiet=False)
+    st.write("Model 2 file size:", os.path.getsize(output), "bytes")
+    return joblib.load(output)
+
+# Load models once, cached
+rf_model_1 = load_rf_model_1()
+rf_model_2 = load_rf_model_2()
+
+
 # Load models (cached, won’t redownload on each rerun)
 eff_model = load_eff_model()
 inc_model = load_inc_model()
@@ -1067,7 +1100,7 @@ with col2:
         import DL_model_ENB3andIncV3_code_and_seg_main
         from DL_model_ENB3andIncV3_code_and_seg_main import full_code
 
-        imp_result,max_confidence_ML = full_code(output_path, eff_model, inc_model)
+        imp_result,max_confidence_ML = full_code(output_path, eff_model, inc_model,rf_model_1,rf_model_2)
 
         print('final_impression', imp_result)
         #print('output image path :', imp_image_out)
