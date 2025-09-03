@@ -9,9 +9,7 @@ import uuid
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
-#https://drive.google.com/file/d/1Bfm0LfXDL-0GNtoflwx9Tc981HFE15Lh/view?usp=sharing  ## v3
-#https://drive.google.com/file/d/1Y43PfZI6fCVZCBWpx2lGjk50aR5rfJ0m/view?usp=sharing  ##B3
-
+import os 
 import gdown
 ########### efficientnetb3 and inceptionv3 model
 @st.cache_resource
