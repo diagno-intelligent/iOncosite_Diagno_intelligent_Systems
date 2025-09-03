@@ -40,22 +40,26 @@ model_path = hf_hub_download(
 inc_model = keras.models.load_model(model_path)
 
 #### loading ML
+# Load Random Forest (Chi2)
 model_path = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="lbm_BOTH_rf_model_chi2_w_fec_200_train_acc1.0_test_acc0.914235294117647.pkl"
 )
-rf_chi2_ens=joblib.load(output)
+rf_chi2_ens = joblib.load(model_path)
+
+# Load XGBoost (Chi2)
 model_path = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="2_LC_mass_other_xgb_chi2_fec_150_acc1.0.pkl"
 )
+xgb_chi2_ens = joblib.load(model_path)
 
-xgb_chi2_ens=joblib.load(output)
+# Load Random Forest (Mutual Info)
 model_path = hf_hub_download(
     repo_id="DiagnoIntelligentSytem/lung-xray-models",
     filename="lbm_BOTH_rf_model_mutual_info_classif_w_fec_150_train_acc1.0_test_acc0.914235294117647.pkl"
 )
-rf_mi_ens=joblib.load(output)
+rf_mi_ens = joblib.load(model_path)
 # ----------------------------
 # Optional: Check token
 # ----------------------------
